@@ -3,13 +3,14 @@ import { AgGridReact } from "ag-grid-react";
 
 import { Todo } from "../utils/types/todos";
 import { Loader } from "../components/loader";
-import { useTodosQuery } from "src/api/todos";
+import { useCreateTodoMutation, useTodosQuery } from "src/api/todos";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 
 export function Todos() {
   const { data: rowData, isLoading } = useTodosQuery();
+  const createTodoMutation = useCreateTodoMutation();
 
   if (isLoading) return <Loader />;
 
@@ -26,16 +27,25 @@ export function Todos() {
   ];
 
   return (
-    <div
-      className="ag-theme-quartz"
-      style={{ height: "calc(100vh - 64px)", width: "100%" }}
-    >
-      <AgGridReact
-        noRowsOverlayComponent={<span>אין משימות🤔</span>}
-        rowData={rowData}
-        columnDefs={columnDefs}
-        enableRtl
-      />
-    </div>
+    <>
+      <button
+        onClick={() => {
+          createTodoMutation.mutate({ done: false, name: "first todo yay" });
+        }}
+      >
+        hey
+      </button>
+      <div
+        className="ag-theme-quartz"
+        style={{ height: "calc(100vh - 64px)", width: "100%" }}
+      >
+        <AgGridReact
+          noRowsOverlayComponent={<span>אין משימות🤔</span>}
+          rowData={rowData}
+          columnDefs={columnDefs}
+          enableRtl
+        />
+      </div>
+    </>
   );
 }

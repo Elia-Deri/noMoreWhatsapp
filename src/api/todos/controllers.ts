@@ -5,6 +5,6 @@ export async function getTodos() {
   return (await axiosInstance.get("todos")).data as Todo[];
 }
 
-export function createTodo() {
-  return axiosInstance.post("todos/createTodo");
+export function createTodo({ name, done }: { name: string; done: boolean }) {
+  return axiosInstance.post("todos/createTodo", { name: name, done: done });
 }
