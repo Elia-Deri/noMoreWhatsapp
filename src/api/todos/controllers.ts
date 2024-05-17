@@ -5,6 +5,27 @@ export async function getTodos() {
   return (await axiosInstance.get("todos")).data as Todo[];
 }
 
-export function createTodo({ name, done }: { name: string; done: boolean }) {
-  return axiosInstance.post("todos/createTodo", { name: name, done: done });
+export function createTodo({
+  name,
+  description,
+  deadline,
+  location,
+  contact,
+  done,
+}: {
+  name: string;
+  description?: string;
+  deadline?: number;
+  location: string;
+  contact?: { name?: string; phoneNumber?: `0${number}-${number}-${number}` };
+  done: boolean;
+}) {
+  return axiosInstance.post("todos/createTodo", {
+    name,
+    description,
+    deadline,
+    location,
+    contact,
+    done,
+  });
 }

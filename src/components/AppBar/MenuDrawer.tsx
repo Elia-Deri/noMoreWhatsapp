@@ -16,7 +16,6 @@ export function MenuDrawer({
         [`& .MuiDrawer-paper`]: { width: drawerWidth },
       }}
       open={open}
-      anchor="right"
       onClose={() => setOpen(false)}
     >
       <Toolbar />

@@ -10,9 +10,9 @@ export function CustomAppBar() {
       <MenuDrawer open={openDrawer} setOpen={setOpenDrawer} />
       <AppBar sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
         <Toolbar>
-          <Grid container direction={"row-reverse"}>
+          <Grid container>
             <Grid item>
-              <IconButton onClick={() => setOpenDrawer(true)}>
+              <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
                 <Menu />
               </IconButton>
             </Grid>

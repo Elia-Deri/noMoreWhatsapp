@@ -7,9 +7,5 @@ export function useTodosQuery() {
 }
 
 export function useCreateTodoMutation() {
-  return useMutationInvalidation(
-    { mutationFn: createTodo },
-    ["Todos"],
-    "ייאי עוד משימה 😒"
-  );
+  return useMutationInvalidation({ mutationFn: createTodo }, ["Todos"]);
 }
