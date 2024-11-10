@@ -2,12 +2,13 @@ import { prefixer } from "stylis";
 import createCache from "@emotion/cache";
 import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
-import { ThemeProvider, createTheme } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+import { theme } from "./theme";
 import { Todos } from "./pages/todos/Todos";
 import { WelcomePage } from "./pages/Welcome";
 import { MuniStatus } from "./pages/MuniStatus";
@@ -45,17 +46,6 @@ const queryClient = new QueryClient();
 const cacheRtl = createCache({
   key: "muirtl",
   stylisPlugins: [prefixer, rtlPlugin],
-});
-
-const theme = createTheme({
-  direction: "rtl",
-  components: {
-    MuiButton: {
-      defaultProps: {
-        variant: "contained",
-      },
-    },
-  },
 });
 
 export function App() {

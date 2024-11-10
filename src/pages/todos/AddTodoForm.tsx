@@ -1,7 +1,9 @@
 import { IoMdAdd } from "react-icons/io";
+import React, { useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Grid, TextField, Typography } from "@mui/material";
+import { Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
 
+import { usePhonesQuery } from "src/api/todos/utils";
 import { useCreateTodoMutation } from "src/api/todos";
 import { DialogComponent } from "src/components/DialogComponent";
 import { FormTextField } from "src/components/Forms/FormTextField";
@@ -14,7 +16,7 @@ type AddTodoValues = {
   location: string;
   contact?: {
     name?: string;
-    phoneNumber?: `0${number}-${number}-${number}`;
+    phoneNumber?: string;
   };
   done: boolean;
 };
@@ -26,6 +28,11 @@ export function AddTodoForm({
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const [phone, setPhone] = useState("");
+  const phoneRef = useRef<HTMLDivElement>(null);
+
+  const { data: phones } = usePhonesQuery();
+
   const createTodoMutation = useCreateTodoMutation();
 
   const { handleSubmit, control, reset, formState } = useForm<AddTodoValues>();
@@ -38,7 +45,10 @@ export function AddTodoForm({
         done: false,
         description: values.description,
         deadline: values.deadLine?.valueOf(),
-        contact: values.contact,
+        contact: {
+          name: values.contact?.name,
+          phoneNumber: `${phone}-${values.contact?.phoneNumber}`,
+        },
       },
       {
         onSuccess: () => {
@@ -113,14 +123,13 @@ export function AddTodoForm({
 
           <Grid item xs={6.4}>
             <Grid container spacing={2}>
-              <Grid item xs={6}></Grid>
-              <Grid item xs={6}>
+              <Grid item xs={8}>
                 <Controller
                   name="contact.phoneNumber"
                   control={control}
                   render={({ field }) => (
                     <TextField
-                      size="small"
+                      inputRef={phoneRef}
                       fullWidth
                       error={
                         formState.isSubmitted &&
@@ -148,10 +157,26 @@ export function AddTodoForm({
 
                         field.onChange(newValue);
                       }}
-                      label="טלפון"
                     />
                   )}
                 />
+              </Grid>
+
+              <Grid item xs={4}>
+                <Select
+                  fullWidth
+                  value={phone || "050"}
+                  onChange={(e) => {
+                    setPhone(e.target.value as string);
+                    phoneRef.current?.focus();
+                  }}
+                >
+                  {phones?.map((phone) => (
+                    <MenuItem key={phone} value={phone}>
+                      {phone}
+                    </MenuItem>
+                  )) || "אין אופציות"}
+                </Select>
               </Grid>
             </Grid>
           </Grid>
