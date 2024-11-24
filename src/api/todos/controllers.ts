@@ -1,4 +1,4 @@
-import { axiosInstance } from "src/components/axiosInstance";
+import { axiosInstance } from "src/api/axiosInstance";
 import { CreateTodo } from "./types";
 
 export function createTodo({
