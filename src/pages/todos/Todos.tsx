@@ -4,13 +4,13 @@ import { IoMdAdd } from "react-icons/io";
 import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 
+import { Todo } from "src/api/todos/types";
 import { AddTodoForm } from "./AddTodoForm";
 import { useTodosQuery } from "src/api/todos";
 import { Loader } from "src/components/loader";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
-import { Todo } from "src/api/todos/types";
 
 export function Todos() {
   const [openAddTodo, setOpenAddTodo] = useState(false);
@@ -30,7 +30,6 @@ export function Todos() {
     },
     { field: "deadline", headerName: "תאריך משימה" },
   ];
-  console.log(rowData);
 
   return (
     <>
